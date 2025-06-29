@@ -24,9 +24,19 @@ const FormField = ({ fieldTitle, children }: { fieldTitle: string; children: Rea
 };
 
 function Lab() {
-  const { personName, subTitleText, setPersonName, setSubTitleText } = useEditorStore();
+  const {
+    personName,
+    subTitleText,
+    enableSummary,
+    summary,
+    setPersonName,
+    setSubTitleText,
+    setEnableSummary,
+    setSummary,
+  } = useEditorStore();
   const debouncedPersonName = useDebounce(personName, PDF_REFRESH_UPDATE_INTERVAL);
   const debouncedSubTitleText = useDebounce(subTitleText, PDF_REFRESH_UPDATE_INTERVAL);
+  const debouncedSummary = useDebounce(summary, PDF_REFRESH_UPDATE_INTERVAL);
   const [animationKey, setAnimationKey] = useState(0);
 
   return (
@@ -66,6 +76,20 @@ function Lab() {
             }}
           />
         </FormField>
+        <FormField fieldTitle="Summary">
+          <input type="checkbox" checked={enableSummary} onChange={(e) => setEnableSummary(e.target.checked)} />
+          <div className="w-full p-2 mb-2 border border-gray-200 rounded">
+            <textarea
+              placeholder="Your Summary"
+              className="w-full p-2 mb-2 border border-gray-200 rounded"
+              value={summary}
+              onChange={(e) => {
+                setSummary(e.target.value);
+                setAnimationKey((prevKey) => prevKey + 1);
+              }}
+            />
+          </div>
+        </FormField>
       </div>
 
       {/* Column 3: Main Content */}
@@ -76,7 +100,12 @@ function Lab() {
           style={{ backgroundSize: "200% 100%" }}
         />
         <ClientOnly>
-          <PDFWebView personName={debouncedPersonName} subTitleText={debouncedSubTitleText} />
+          <PDFWebView
+            personName={debouncedPersonName}
+            subTitleText={debouncedSubTitleText}
+            enableSummary={enableSummary}
+            summary={summary}
+          />
         </ClientOnly>
       </div>
     </div>
