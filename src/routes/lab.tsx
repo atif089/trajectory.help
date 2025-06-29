@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import PDFWebView from "@/components/pdf-web-view";
 import { useDebounce } from "@/hooks/use-debounce";
-import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly, createFileRoute } from "@tanstack/react-router";
+import PDFWebView from "@/components/pdf-web-view";
 
 const PDF_REFRESH_UPDATE_INTERVAL = 3000;
 
@@ -60,7 +60,9 @@ function Lab() {
           className="h-1 mb-0 bg-blue-500 loading-bar-animation"
           style={{ backgroundSize: "200% 100%" }}
         />
-        <PDFWebView personName={debouncedPersonName} subTitleText={debouncedSubTitleText} />
+        <ClientOnly>
+          <PDFWebView personName={debouncedPersonName} subTitleText={debouncedSubTitleText} />
+        </ClientOnly>
       </div>
     </div>
   );
