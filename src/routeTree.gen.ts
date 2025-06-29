@@ -16,6 +16,7 @@ import { Route as LabRouteImport } from './routes/lab'
 import { Route as DeferredRouteImport } from './routes/deferred'
 import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
 import { Route as IndexRouteImport } from './routes/index'
+import { ServerRoute as HealthzServerRouteImport } from './routes/healthz'
 import { ServerRoute as ApiHelloServerRouteImport } from './routes/api.hello'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -43,6 +44,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const HealthzServerRoute = HealthzServerRouteImport.update({
+  id: '/healthz',
+  path: '/healthz',
+  getParentRoute: () => rootServerRouteImport,
 } as any)
 const ApiHelloServerRoute = ApiHelloServerRouteImport.update({
   id: '/api/hello',
@@ -86,24 +92,28 @@ export interface RootRouteChildren {
   RedirectRoute: typeof RedirectRoute
 }
 export interface FileServerRoutesByFullPath {
+  '/healthz': typeof HealthzServerRoute
   '/api/hello': typeof ApiHelloServerRoute
 }
 export interface FileServerRoutesByTo {
+  '/healthz': typeof HealthzServerRoute
   '/api/hello': typeof ApiHelloServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
+  '/healthz': typeof HealthzServerRoute
   '/api/hello': typeof ApiHelloServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/hello'
+  fullPaths: '/healthz' | '/api/hello'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/hello'
-  id: '__root__' | '/api/hello'
+  to: '/healthz' | '/api/hello'
+  id: '__root__' | '/healthz' | '/api/hello'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
+  HealthzServerRoute: typeof HealthzServerRoute
   ApiHelloServerRoute: typeof ApiHelloServerRoute
 }
 
@@ -148,6 +158,13 @@ declare module '@tanstack/react-router' {
 }
 declare module '@tanstack/react-start/server' {
   interface ServerFileRoutesByPath {
+    '/healthz': {
+      id: '/healthz'
+      path: '/healthz'
+      fullPath: '/healthz'
+      preLoaderRoute: typeof HealthzServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/hello': {
       id: '/api/hello'
       path: '/api/hello'
@@ -169,6 +186,7 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
+  HealthzServerRoute: HealthzServerRoute,
   ApiHelloServerRoute: ApiHelloServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
