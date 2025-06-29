@@ -1,0 +1,69 @@
+"use client";
+
+import { useState } from "react";
+import PDFWebView from "@/components/pdf-web-view";
+import { useDebounce } from "@/hooks/use-debounce";
+import { createFileRoute } from "@tanstack/react-router";
+
+const PDF_REFRESH_UPDATE_INTERVAL = 3000;
+
+export const Route = createFileRoute("/lab")({
+  component: Lab,
+});
+
+function Lab() {
+  const [personName, setPersonName] = useState("John H. Doe");
+  const [subTitleText, setSubTitleText] = useState("Engineering Leader | +1 (512) 555-5555");
+  const debouncedPersonName = useDebounce(personName, PDF_REFRESH_UPDATE_INTERVAL);
+  const debouncedSubTitleText = useDebounce(subTitleText, PDF_REFRESH_UPDATE_INTERVAL);
+  const [animationKey, setAnimationKey] = useState(0);
+
+  return (
+    <div className="flex h-screen">
+      {/* Column 1: Sidebar */}
+      <div className="w-20 p-4">
+        {/* Icons or 1-word text here */}
+        <div>Icon1</div>
+      </div>
+
+      {/* Column 2: Inputs */}
+      <div
+        className="w-full max-w-md m-4 p-4 rounded-lg bg-white border shadow-lg border-gray-200"
+        style={{ maxWidth: "600px" }}
+      >
+        <input
+          type="text"
+          placeholder="Your Name"
+          className="w-full p-2 mb-2 border border-gray-200 rounded"
+          value={personName}
+          onChange={(e) => {
+            setPersonName(e.target.value);
+            setAnimationKey((prevKey) => prevKey + 1);
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Your Subtitle"
+          className="w-full p-2 mb-2 border border-gray-200 rounded"
+          value={subTitleText}
+          onChange={(e) => {
+            setSubTitleText(e.target.value);
+            setAnimationKey((prevKey) => prevKey + 1);
+          }}
+        />
+      </div>
+
+      {/* Column 3: Main Content */}
+      <div className="flex-grow p-4 bg-gray-400">
+        <div
+          key={animationKey}
+          className="h-1 mb-0 bg-blue-500 loading-bar-animation"
+          style={{ backgroundSize: "200% 100%" }}
+        />
+        <PDFWebView personName={debouncedPersonName} subTitleText={debouncedSubTitleText} />
+      </div>
+    </div>
+  );
+}
+
+export default Lab;
