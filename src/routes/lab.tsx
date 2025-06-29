@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ClientOnly, createFileRoute } from "@tanstack/react-router";
 import PDFWebView from "@/components/pdf-web-view";
+import { useEditorStore } from "@/store/editor";
 
 const PDF_REFRESH_UPDATE_INTERVAL = 3000;
 
@@ -23,8 +24,7 @@ const FormField = ({ fieldTitle, children }: { fieldTitle: string; children: Rea
 };
 
 function Lab() {
-  const [personName, setPersonName] = useState("John H. Doe");
-  const [subTitleText, setSubTitleText] = useState("Engineering Leader | +1 (512) 555-5555");
+  const { personName, subTitleText, setPersonName, setSubTitleText } = useEditorStore();
   const debouncedPersonName = useDebounce(personName, PDF_REFRESH_UPDATE_INTERVAL);
   const debouncedSubTitleText = useDebounce(subTitleText, PDF_REFRESH_UPDATE_INTERVAL);
   const [animationKey, setAnimationKey] = useState(0);
