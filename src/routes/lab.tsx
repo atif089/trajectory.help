@@ -11,6 +11,17 @@ export const Route = createFileRoute("/lab")({
   component: Lab,
 });
 
+const FormField = ({ fieldTitle, children }: { fieldTitle: string; children: React.ReactNode }) => {
+  return (
+    <div className="editor_field__wrapper mb-4">
+      <label className="block text-xs mb-2 font-medium text-gray-700" htmlFor="personName">
+        {fieldTitle}
+      </label>
+      {children}
+    </div>
+  );
+};
+
 function Lab() {
   const [personName, setPersonName] = useState("John H. Doe");
   const [subTitleText, setSubTitleText] = useState("Engineering Leader | +1 (512) 555-5555");
@@ -31,26 +42,30 @@ function Lab() {
         className="w-full max-w-md m-4 p-4 rounded-lg bg-white border shadow-lg border-gray-200"
         style={{ maxWidth: "600px" }}
       >
-        <input
-          type="text"
-          placeholder="Your Name"
-          className="w-full p-2 mb-2 border border-gray-200 rounded"
-          value={personName}
-          onChange={(e) => {
-            setPersonName(e.target.value);
-            setAnimationKey((prevKey) => prevKey + 1);
-          }}
-        />
-        <input
-          type="text"
-          placeholder="Your Subtitle"
-          className="w-full p-2 mb-2 border border-gray-200 rounded"
-          value={subTitleText}
-          onChange={(e) => {
-            setSubTitleText(e.target.value);
-            setAnimationKey((prevKey) => prevKey + 1);
-          }}
-        />
+        <FormField fieldTitle="Name">
+          <input
+            type="text"
+            placeholder="Your Name"
+            className="w-full p-2 mb-2 border border-gray-200 rounded"
+            value={personName}
+            onChange={(e) => {
+              setPersonName(e.target.value);
+              setAnimationKey((prevKey) => prevKey + 1);
+            }}
+          />
+        </FormField>
+        <FormField fieldTitle="Subtitle">
+          <input
+            type="text"
+            placeholder="Your Subtitle"
+            className="w-full p-2 mb-2 border border-gray-200 rounded"
+            value={subTitleText}
+            onChange={(e) => {
+              setSubTitleText(e.target.value);
+              setAnimationKey((prevKey) => prevKey + 1);
+            }}
+          />
+        </FormField>
       </div>
 
       {/* Column 3: Main Content */}
