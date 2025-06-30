@@ -8,6 +8,21 @@ const PDF_REFRESH_UPDATE_INTERVAL = 3000;
 
 export const Route = createFileRoute("/lab")({
   component: Lab,
+  head: () => ({
+    meta: [
+      {
+        title: "Trajectory.help | CV Lab",
+      },
+      {
+        name: "description",
+        content: "Trajectory.help - grow your career, CV Lab",
+      },
+      {
+        name: "keywords",
+        content: "Trajectory.help, CV Lab, career growth, career development, career advancement, career success",
+      },
+    ],
+  }),
 });
 
 const FormField = ({ fieldTitle, children }: { fieldTitle: string; children: React.ReactNode }) => {
