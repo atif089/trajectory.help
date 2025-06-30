@@ -78,17 +78,15 @@ function Lab() {
         </FormField>
         <FormField fieldTitle="Summary">
           <input type="checkbox" checked={enableSummary} onChange={(e) => setEnableSummary(e.target.checked)} />
-          <div className="w-full p-2 mb-2 border border-gray-200 rounded">
-            <textarea
-              placeholder="Your Summary"
-              className="w-full p-2 mb-2 border border-gray-200 rounded"
-              value={summary}
-              onChange={(e) => {
-                setSummary(e.target.value);
-                setAnimationKey((prevKey) => prevKey + 1);
-              }}
-            />
-          </div>
+          <textarea
+            placeholder="Your Summary"
+            className="w-full p-2 mb-2 border border-gray-200 rounded"
+            value={summary}
+            onChange={(e) => {
+              setSummary(e.target.value);
+              setAnimationKey((prevKey) => prevKey + 1);
+            }}
+          />
         </FormField>
       </div>
 

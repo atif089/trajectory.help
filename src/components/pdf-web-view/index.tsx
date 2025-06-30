@@ -19,8 +19,17 @@ function PDFWebView({
   enableSummary?: boolean;
   summary?: string;
 }) {
+  const renderKey = React.useRef(0);
+
+  // TODO: fixes the bug with @react-pdf/renderer where
+  // removing an element crashes the app
+  // https://stackoverflow.com/questions/79583113/typeerror-eo-is-not-a-function-when-deleting-in-react-pdf
+  React.useEffect(() => {
+    renderKey.current += 1;
+  }, [enableSummary, summary]);
+
   return (
-    <PDFViewer style={styles.viewer}>
+    <PDFViewer key={renderKey.current} style={styles.viewer}>
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={[styles.section, styles.header]}>
