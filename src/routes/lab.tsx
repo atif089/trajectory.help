@@ -1,10 +1,8 @@
-"use client";
-
 import { useState } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ClientOnly, createFileRoute } from "@tanstack/react-router";
 import PDFWebView from "@/components/pdf-web-view";
-import { useEditorStore } from "@/store/editor";
+import { useEditorStore } from "@/store/editor.store";
 
 const PDF_REFRESH_UPDATE_INTERVAL = 3000;
 
@@ -50,7 +48,7 @@ function Lab() {
       {/* Column 2: Inputs */}
       <div
         className="w-full max-w-md m-4 p-4 rounded-lg bg-white border shadow-lg border-gray-200"
-        style={{ maxWidth: "600px" }}
+        style={{ maxWidth: "800px" }}
       >
         <FormField fieldTitle="Name">
           <input
@@ -91,7 +89,7 @@ function Lab() {
       </div>
 
       {/* Column 3: Main Content */}
-      <div className="flex-grow p-4 bg-gray-400">
+      <div className="flex-grow p-4">
         <div
           key={animationKey}
           className="h-1 mb-0 bg-blue-500 loading-bar-animation"

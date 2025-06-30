@@ -50,7 +50,7 @@ function PDFWebView({
 const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "#ffffff",
     fontFamily: "PT Serif",
     fontSize: 11,
   },

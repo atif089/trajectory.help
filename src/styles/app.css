@@ -14,6 +14,7 @@
   html,
   body {
     @apply text-gray-900 bg-gray-50 dark:bg-gray-950 dark:text-gray-200;
+    background-image: linear-gradient(to bottom right, #f5f0fe, #eef5fc);
   }
 
   .using-mouse * {
