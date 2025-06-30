@@ -20,4 +20,9 @@
   .using-mouse * {
     outline: none !important;
   }
+
+  input,
+  textarea {
+    @apply border-[1px] border-[#f5f0fe] rounded focus:border-transparent focus:outline focus:outline-offset-1 focus:outline-violet-500;
+  }
 }

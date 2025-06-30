@@ -54,7 +54,7 @@ function Lab() {
           <input
             type="text"
             placeholder="Your Name"
-            className="w-full p-2 mb-2 border border-gray-200 rounded"
+            className="w-full p-2 mb-2"
             value={personName}
             onChange={(e) => {
               setPersonName(e.target.value);
@@ -66,7 +66,7 @@ function Lab() {
           <input
             type="text"
             placeholder="Your Subtitle"
-            className="w-full p-2 mb-2 border border-gray-200 rounded"
+            className="w-full p-2 mb-2"
             value={subTitleText}
             onChange={(e) => {
               setSubTitleText(e.target.value);
@@ -78,7 +78,7 @@ function Lab() {
           <input type="checkbox" checked={enableSummary} onChange={(e) => setEnableSummary(e.target.checked)} />
           <textarea
             placeholder="Your Summary"
-            className="w-full p-2 mb-2 border border-gray-200 rounded"
+            className="w-full p-2 mb-2 resize-none"
             value={summary}
             onChange={(e) => {
               setSummary(e.target.value);
