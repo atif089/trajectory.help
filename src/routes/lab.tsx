@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ClientOnly, createFileRoute } from "@tanstack/react-router";
-import PDFWebView from "@/components/pdf-web-view";
+import PDFContainer from "~/components/PDFContainer";
 import { useEditorStore } from "@/store/editor.store";
 
 const PDF_REFRESH_UPDATE_INTERVAL = 3000;
@@ -111,7 +111,7 @@ function Lab() {
           style={{ backgroundSize: "200% 100%" }}
         />
         <ClientOnly>
-          <PDFWebView
+          <PDFContainer
             personName={debouncedPersonName}
             subTitleText={debouncedSubTitleText}
             enableSummary={enableSummary}

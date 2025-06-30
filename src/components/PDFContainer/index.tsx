@@ -8,7 +8,7 @@ Font.register({
   src: "http://fonts.gstatic.com/s/ptserif/v8/EgBlzoNBIHxNPCMwXaAhYPesZW2xOQ-xsNqO47m55DA.ttf",
 });
 
-function PDFWebView({
+function PDFContainer({
   personName = "John Doe",
   subTitleText = "Engineering Leader | +1 (512) 555-5555",
   enableSummary = false,
@@ -78,5 +78,5 @@ const styles = StyleSheet.create({
 });
 
 export default React.memo<{ personName: string; subTitleText: string; enableSummary?: boolean; summary?: string }>(
-  PDFWebView
+  PDFContainer
 );
