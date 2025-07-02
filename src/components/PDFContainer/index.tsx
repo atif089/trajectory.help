@@ -1,6 +1,9 @@
 import React from "react";
-
 import { Page, Text, View, Document, StyleSheet, Font, PDFViewer } from "@react-pdf/renderer";
+import { useEditorStore } from "@/store/editor.store";
+import { useDebounce } from "@/hooks/use-debounce";
+
+const PDF_REFRESH_UPDATE_INTERVAL = 1000;
 
 Font.register({
   family: "PT Serif",
@@ -8,17 +11,13 @@ Font.register({
   src: "http://fonts.gstatic.com/s/ptserif/v8/EgBlzoNBIHxNPCMwXaAhYPesZW2xOQ-xsNqO47m55DA.ttf",
 });
 
-function PDFContainer({
-  personName = "John Doe",
-  subTitleText = "Engineering Leader | +1 (512) 555-5555",
-  enableSummary = false,
-  summary = "",
-}: {
-  personName: string;
-  subTitleText?: string;
-  enableSummary?: boolean;
-  summary?: string;
-}) {
+function PDFContainer() {
+  const { personName, subTitleText, enableSummary, summary } = useEditorStore();
+  const debouncedEnableSummary = useDebounce(enableSummary, PDF_REFRESH_UPDATE_INTERVAL);
+  const debouncedPersonName = useDebounce(personName, PDF_REFRESH_UPDATE_INTERVAL);
+  const debouncedSubTitleText = useDebounce(subTitleText, PDF_REFRESH_UPDATE_INTERVAL);
+  const debouncedSummary = useDebounce(summary, PDF_REFRESH_UPDATE_INTERVAL);
+
   const renderKey = React.useRef(0);
 
   // TODO: fixes the bug with @react-pdf/renderer where
@@ -26,19 +25,20 @@ function PDFContainer({
   // https://stackoverflow.com/questions/79583113/typeerror-eo-is-not-a-function-when-deleting-in-react-pdf
   React.useEffect(() => {
     renderKey.current += 1;
-  }, [enableSummary, summary]);
+    console.log("renderKey.current", renderKey.current);
+  }, [debouncedEnableSummary, debouncedSummary]);
 
   return (
     <PDFViewer key={renderKey.current} style={styles.viewer}>
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={[styles.section, styles.header]}>
-            <Text style={styles.title}>{personName}</Text>
-            <Text style={styles.subTitle}>{subTitleText}</Text>
+            <Text style={styles.title}>{debouncedPersonName}</Text>
+            <Text style={styles.subTitle}>{debouncedSubTitleText}</Text>
           </View>
           {enableSummary && (
             <View style={styles.section}>
-              <Text style={styles.summary}>{summary}</Text>
+              <Text style={styles.summary}>{debouncedSummary}</Text>
             </View>
           )}
         </Page>
@@ -77,6 +77,4 @@ const styles = StyleSheet.create({
   summary: {},
 });
 
-export default React.memo<{ personName: string; subTitleText: string; enableSummary?: boolean; summary?: string }>(
-  PDFContainer
-);
+export default React.memo(PDFContainer);
