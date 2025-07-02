@@ -11,6 +11,11 @@ interface EditorState {
   summary: string;
   setSummary: (summary: string) => void;
   setEnableSummary: (enableSummary: boolean) => void;
+
+  enableAchievements: boolean;
+  achievements: string[];
+  setAchievements: (achievements: string[]) => void;
+  setEnableAchievements: (enableAchievements: boolean) => void;
 }
 
 export const useEditorStore = create<EditorState>((set) => ({
@@ -23,4 +28,9 @@ export const useEditorStore = create<EditorState>((set) => ({
   summary: "Engineering Leader with 15 years of experience in software development.",
   setSummary: (summary) => set({ summary }),
   setEnableSummary: (enableSummary) => set({ enableSummary }),
+
+  enableAchievements: true,
+  achievements: ["Achievement 1", "Achievement 2", "Achievement 3"],
+  setAchievements: (achievements) => set({ achievements }),
+  setEnableAchievements: (enableAchievements) => set({ enableAchievements }),
 }));

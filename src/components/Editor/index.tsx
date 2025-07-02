@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import React from "react";
+
 import { useEditorStore } from "@/store/editor.store";
 
 const FormField = ({ fieldTitle, children }: { fieldTitle: string; children: React.ReactNode }) => {
@@ -16,10 +17,14 @@ const Editor = () => {
     subTitleText,
     enableSummary,
     summary,
+    enableAchievements,
+    achievements,
     setPersonName,
     setSubTitleText,
     setEnableSummary,
     setSummary,
+    setEnableAchievements,
+    setAchievements,
   } = useEditorStore();
 
   return (
@@ -53,12 +58,31 @@ const Editor = () => {
         <input type="checkbox" checked={enableSummary} onChange={(e) => setEnableSummary(e.target.checked)} />
         <textarea
           placeholder="Your Summary"
-          className="w-full p-2 mb-2 resize-none"
+          className="w-full p-2 mb-2 resize-y"
           value={summary}
+          disabled={!enableSummary}
           onChange={(e) => {
             setSummary(e.target.value);
           }}
         />
+      </FormField>
+      <FormField fieldTitle="Achievements">
+        <input type="checkbox" checked={enableAchievements} onChange={(e) => setEnableAchievements(e.target.checked)} />
+        {achievements.map((achievement, index) => (
+          <input
+            type="text"
+            placeholder="Your Subtitle"
+            className="w-full p-2 mb-2"
+            key={`field-achievement-${index}`}
+            value={achievement}
+            disabled={!enableAchievements}
+            onChange={(e) => {
+              const newAchievements = [...achievements];
+              newAchievements[index] = e.target.value;
+              setAchievements(newAchievements);
+            }}
+          />
+        ))}
       </FormField>
     </div>
   );
