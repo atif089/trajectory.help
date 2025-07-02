@@ -1,4 +1,6 @@
-import { ClientOnly, createFileRoute } from "@tanstack/react-router";
+import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ClientOnly, createFileRoute, Link } from "@tanstack/react-router";
 
 import Editor from "@/components/Editor";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
@@ -27,17 +29,21 @@ function Lab() {
   return (
     <div className="flex h-screen">
       {/* Column 1: Sidebar */}
-      <div className="w-20 p-4">
+      <div className="w-20 p-4 mt-2 flex justify-center">
         {/* Icons or 1-word text here */}
-        <div>Icon1</div>
+        <Link to="/lab">
+          <div className="flex flex-col items-center justify-center rounded-full w-[50px] h-[50px] text-violet-500 ">
+            <FontAwesomeIcon icon={faNewspaper} className="text-violet-500" />
+            <span className="text-xs mt-2 font-semibold">Editor</span>
+          </div>
+        </Link>
       </div>
 
       {/* Column 2: Inputs */}
-      <Editor />
+      <Editor editorTitle="CV Tailor" />
 
       {/* Column 3: Main Content */}
       <div className="flex-grow p-4">
-        <div className="h-1 mb-0 bg-blue-500 loading-bar-animation" style={{ backgroundSize: "200% 100%" }} />
         <ClientOnly>
           <MarkdownRenderer />
           {/* TODO: Figure out download button */}

@@ -6,7 +6,7 @@ function MarkdownRenderer() {
 
   return (
     <div className="a4-sim-wrapper w-full flex items-center justify-center my-4 ">
-      <div className="a4-sim w-full max-w-[1200px] bg-white p-4 shadow-[5px_5px_5px_0_rgba(0,0,0,0.1)]">
+      <div className="a4-sim w-full max-w-[1200px] bg-white p-8 shadow-[5px_5px_5px_0_rgba(0,0,0,0.1)]">
         <section className="mb-4">
           <h1 className="text-[24pt] font-bold">{personName}</h1>
           <p className="text-[14pt]">{subTitleText}</p>

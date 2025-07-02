@@ -11,7 +11,7 @@ const FormField = ({ fieldTitle, children }: { fieldTitle: string; children: Rea
   );
 };
 
-const Editor = () => {
+const Editor = ({ editorTitle }: { editorTitle: string }) => {
   const {
     personName,
     subTitleText,
@@ -29,9 +29,11 @@ const Editor = () => {
 
   return (
     <div
-      className="w-full max-w-md m-4 p-4 rounded-lg bg-white border shadow-lg border-gray-200"
+      className="w-full max-w-md my-4 p-4 rounded-lg bg-white border shadow-lg border-gray-200"
       style={{ maxWidth: "800px" }}
     >
+      <h1 className="text-3xl font-bold mb-8">{editorTitle}</h1>
+
       <FormField fieldTitle="Name">
         <input
           type="text"
