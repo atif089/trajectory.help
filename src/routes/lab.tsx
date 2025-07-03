@@ -29,7 +29,7 @@ function Lab() {
   return (
     <div className="flex h-screen">
       {/* Column 1: Sidebar */}
-      <div className="w-20 p-4 mt-2 flex justify-center">
+      <div className="w-20 p-4 mt-2 flex flex-col">
         {/* Icons or 1-word text here */}
         <Link to="/lab">
           <div className="flex flex-col items-center justify-center rounded-full w-[50px] h-[50px] text-violet-500 ">
