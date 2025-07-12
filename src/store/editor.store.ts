@@ -1,5 +1,8 @@
 import { create } from "zustand";
 
+import { Experience } from "@/components/ExperienceSection";
+import { experiences as initialExperiences } from "@/components/ExperienceSection/sampleData";
+
 interface EditorState {
   personName: string;
   setPersonName: (name: string) => void;
@@ -16,6 +19,9 @@ interface EditorState {
   achievements: string[];
   setAchievements: (achievements: string[]) => void;
   setEnableAchievements: (enableAchievements: boolean) => void;
+
+  experiences: Experience[];
+  setExperiences: (experiences: Experience[]) => void;
 }
 
 export const useEditorStore = create<EditorState>((set) => ({
@@ -33,4 +39,7 @@ export const useEditorStore = create<EditorState>((set) => ({
   achievements: ["Achievement 1", "Achievement 2", "Achievement 3"],
   setAchievements: (achievements) => set({ achievements }),
   setEnableAchievements: (enableAchievements) => set({ enableAchievements }),
+
+  experiences: initialExperiences,
+  setExperiences: (experiences) => set({ experiences }),
 }));

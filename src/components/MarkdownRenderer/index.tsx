@@ -1,5 +1,6 @@
 import React from "react";
 import { useEditorStore } from "@/store/editor.store";
+import ExperienceSectionWrapper from "./ExperienceSectionWrapper";
 
 function MarkdownRenderer() {
   const { personName, subTitleText, enableSummary, summary, enableAchievements, achievements } = useEditorStore();
@@ -32,6 +33,7 @@ function MarkdownRenderer() {
             )}
           </section>
         )}
+        <ExperienceSectionWrapper />
       </div>
     </div>
   );
