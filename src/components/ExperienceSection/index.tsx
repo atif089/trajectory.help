@@ -17,16 +17,16 @@ interface ExperienceSectionProps {
 const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experiences }) => {
   return (
     <section>
-      <h2 className="text-[14pt] font-bold">Professional Experience</h2>
+      <h2 className="text-[14pt] font-bold mb-2">Professional Experience</h2>
       {experiences.map((exp, idx) => (
-        <div key={idx} style={{ marginBottom: "2rem" }}>
-          <h3>
-            {exp.position} @ {exp.company}
+        <div key={idx} className="mb-2">
+          <h3 className="text-[12pt]">
+            <span className="font-bold">{exp.position}</span> ({exp.company})
           </h3>
-          <div style={{ fontStyle: "italic", color: "#666" }}>
+          <div className="text-gray-600">
             {exp.location} | {exp.from} - {exp.to ? exp.to : "Current"}
           </div>
-          <p className="mt-2">{exp.summary}</p>
+          <p className="mt-1">{exp.summary}</p>
         </div>
       ))}
     </section>

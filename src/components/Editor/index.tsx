@@ -21,10 +21,7 @@ const Editor = () => {
   } = useEditorStore();
 
   return (
-    <div
-      className="w-full max-w-md my-4 p-4 rounded-lg bg-white border shadow-lg border-gray-200 overflow-y-auto"
-      style={{ maxWidth: "800px" }}
-    >
+    <div>
       <FormField fieldTitle="Name" placeholder="Your Name" value={personName} onChange={setPersonName} />
       <FormField fieldTitle="Subtitle" placeholder="Your Subtitle" value={subTitleText} onChange={setSubTitleText} />
       <div className="mb-4">

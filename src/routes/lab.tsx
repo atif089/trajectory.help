@@ -40,7 +40,12 @@ function Lab() {
       </div>
 
       {/* Column 2: Inputs */}
-      <Editor />
+      <div
+        className="w-full max-w-md my-4 p-4 pt-8 rounded-lg bg-white border shadow-lg border-gray-200 overflow-y-auto"
+        style={{ maxWidth: "800px" }}
+      >
+        <Editor />
+      </div>
 
       {/* Column 3: Main Content */}
       <div className="flex-grow p-4">

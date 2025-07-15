@@ -15,4 +15,25 @@ export const experiences: Experience[] = [
       "Collaborated with product managers to define project requirements and deliverables.",
     ],
   },
+  {
+    company: "ABC LLC",
+    position: "Software Engineer",
+    location: "New York, NY",
+    from: "Jan 2018",
+    to: "Dec 2019",
+    summary: "Developed scalable web applications for enterprise clients, focusing on performance and maintainability.",
+    bullets: [
+      "Built and maintained a web application for a financial institution, handling 2M+ transactions per day.",
+      "Mentored 2 junior engineers, helping them grow into independent contributors.",
+    ],
+  },
+  {
+    company: "Tech Devices Inc.",
+    position: "Intern",
+    location: "New York, NY",
+    from: "Mar 2017",
+    to: "May 2017",
+    summary: "Developed location module for a mobile app.",
+    bullets: ["Built location module for a mobile app.", "Tested and deployed the module to production."],
+  },
 ];

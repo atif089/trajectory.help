@@ -39,6 +39,14 @@ const ExperienceEditor: React.FC = () => {
       </div>
       {experiences.map((exp, idx) => (
         <div key={idx} className="mb-6 p-4 border rounded-lg relative">
+          {experiences.length > 1 && (
+            <div className="flex justify-end pb-2">
+              <a href="#" onClick={() => removeExperience(idx)} className="text-red-500 text-xs">
+                Remove
+              </a>
+            </div>
+          )}
+
           <FormField
             fieldTitle="Company"
             placeholder="Company"
@@ -81,16 +89,6 @@ const ExperienceEditor: React.FC = () => {
             onChange={(value) => handleChange(idx, "summary", value)}
             showWordCount={true}
           />
-
-          {experiences.length > 1 && (
-            <button
-              type="button"
-              onClick={() => removeExperience(idx)}
-              className="absolute top-2 right-2 px-2 py-1 bg-red-500 text-white rounded"
-            >
-              ✕
-            </button>
-          )}
         </div>
       ))}
     </div>
