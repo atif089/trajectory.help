@@ -2,11 +2,9 @@ import React from "react";
 
 import { useEditorStore } from "@/store/editor.store";
 import ExperienceEditor from "./ExperienceEditor";
-import BulletListEditor from "./BulletListEditor";
 import FormField from "../common/FormField";
-import FormInput from "../common/FormInput";
 
-const Editor = ({ editorTitle }: { editorTitle: string }) => {
+const Editor = () => {
   const {
     personName,
     subTitleText,
@@ -27,41 +25,36 @@ const Editor = ({ editorTitle }: { editorTitle: string }) => {
       className="w-full max-w-md my-4 p-4 rounded-lg bg-white border shadow-lg border-gray-200 overflow-y-auto"
       style={{ maxWidth: "800px" }}
     >
-      <h1 className="text-3xl font-bold mb-8">{editorTitle}</h1>
-
-      <FormField fieldTitle="Name">
-        <FormInput
-          placeholder="Your Name"
-          value={personName}
-          onChange={setPersonName}
-        />
-      </FormField>
-      <FormField fieldTitle="Subtitle">
-        <FormInput
-          placeholder="Your Subtitle"
-          value={subTitleText}
-          onChange={setSubTitleText}
-        />
-      </FormField>
-      <FormField fieldTitle="Summary">
+      <FormField fieldTitle="Name" placeholder="Your Name" value={personName} onChange={setPersonName} />
+      <FormField fieldTitle="Subtitle" placeholder="Your Subtitle" value={subTitleText} onChange={setSubTitleText} />
+      <div className="mb-4">
         <input type="checkbox" checked={enableSummary} onChange={(e) => setEnableSummary(e.target.checked)} />
-        <FormInput
-          type="textarea"
-          placeholder="Your Summary"
-          value={summary}
-          disabled={!enableSummary}
-          onChange={setSummary}
-        />
-      </FormField>
-      <FormField fieldTitle="Achievements">
+        <span className="ml-2">Enable Summary</span>
+      </div>
+      <FormField
+        fieldTitle="Summary"
+        type="textarea"
+        showWordCount={true}
+        placeholder="Your Summary"
+        value={summary}
+        disabled={!enableSummary}
+        onChange={setSummary}
+      />
+
+      <div className="mb-4">
         <input type="checkbox" checked={enableAchievements} onChange={(e) => setEnableAchievements(e.target.checked)} />
-        <BulletListEditor
-          items={achievements}
-          setItems={setAchievements}
-          disabled={!enableAchievements}
-          placeholderPrefix="Achievement"
-        />
-      </FormField>
+        <span className="ml-2">Enable Achievements</span>
+      </div>
+      <FormField
+        fieldTitle="Achievements"
+        showWordCount={true}
+        placeholder="Your Achievements"
+        type="textarea"
+        value={achievements}
+        disabled={!enableAchievements}
+        onChange={setAchievements}
+      />
+
       <ExperienceEditor />
     </div>
   );

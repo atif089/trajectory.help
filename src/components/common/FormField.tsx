@@ -2,14 +2,84 @@ import React from "react";
 
 interface FormFieldProps {
   fieldTitle: string;
-  children: React.ReactNode;
+  placeholder?: string;
+  value: string;
+  onChange: (value: string) => void;
+  className?: string;
+  disabled?: boolean;
+  type?: "text" | "textarea";
+  children?: React.ReactNode;
+  showWordCount?: boolean;
 }
 
-const FormField: React.FC<FormFieldProps> = ({ fieldTitle, children }) => {
+const FormField: React.FC<FormFieldProps> = ({
+  fieldTitle,
+  placeholder,
+  value,
+  onChange,
+  className = "w-full p-2",
+  disabled = false,
+  type = "text",
+  children,
+  showWordCount = false,
+}) => {
+  const inputElement =
+    type === "textarea" ? (
+      <textarea
+        className={`resize-y ${className}`}
+        placeholder={placeholder}
+        value={value}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    ) : (
+      <input
+        type="text"
+        className={className}
+        placeholder={placeholder}
+        value={value}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    );
+
+  // TODO: These are not accurate for markdown text
+  const chars = value.length;
+  const words = value.split(" ").length;
+
+  const indicator_rule_engine = {
+    green: {
+      words: 40,
+      chars: 300,
+    },
+    yellow: {
+      words: 70,
+      chars: 650,
+    },
+  };
+
+  const indicatorBgClass =
+    words <= indicator_rule_engine.green.words && chars <= indicator_rule_engine.green.chars
+      ? "bg-green-200"
+      : words <= indicator_rule_engine.yellow.words && chars <= indicator_rule_engine.yellow.chars
+        ? "bg-yellow-200"
+        : "bg-red-200";
+
   return (
-    <div className="editor_field__wrapper mb-4">
-      <label className="block text-xs mb-2 font-medium text-gray-700">{fieldTitle}</label>
+    <div className="editor_field__wrapper mb-4 bg-violet-50 border border-gray-200 p-4 rounded relative">
       {children}
+      <label className="block text-xs font-medium text-gray-700 absolute top-[-12px] left-2 bg-white px-2">
+        {fieldTitle}
+      </label>
+      {inputElement}
+
+      {showWordCount && (
+        <div className="flex justify-between bottom-2 right-2 absolute">
+          <span title="words (chars)" className={indicatorBgClass + " p-[3px] text-xs font-bold chars"}>
+            {words}w ({chars}c)
+          </span>
+        </div>
+      )}
     </div>
   );
 };

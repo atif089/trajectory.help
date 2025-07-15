@@ -40,7 +40,7 @@ function Lab() {
       </div>
 
       {/* Column 2: Inputs */}
-      <Editor editorTitle="CV Tailor" />
+      <Editor />
 
       {/* Column 3: Main Content */}
       <div className="flex-grow p-4">

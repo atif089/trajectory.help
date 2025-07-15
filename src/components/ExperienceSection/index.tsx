@@ -20,16 +20,13 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experiences }) =>
       <h2 className="text-[14pt] font-bold">Professional Experience</h2>
       {experiences.map((exp, idx) => (
         <div key={idx} style={{ marginBottom: "2rem" }}>
-          <h3>{exp.position} @ {exp.company}</h3>
+          <h3>
+            {exp.position} @ {exp.company}
+          </h3>
           <div style={{ fontStyle: "italic", color: "#666" }}>
             {exp.location} | {exp.from} - {exp.to ? exp.to : "Current"}
           </div>
-          <p>{exp.summary}</p>
-          <ul>
-            {exp.bullets.map((bullet, i) => (
-              <li key={i}>{bullet}</li>
-            ))}
-          </ul>
+          <p className="mt-2">{exp.summary}</p>
         </div>
       ))}
     </section>

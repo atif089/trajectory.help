@@ -16,13 +16,17 @@ interface EditorState {
   setEnableSummary: (enableSummary: boolean) => void;
 
   enableAchievements: boolean;
-  achievements: string[];
-  setAchievements: (achievements: string[]) => void;
+  achievements: string;
+  setAchievements: (achievements: string) => void;
   setEnableAchievements: (enableAchievements: boolean) => void;
 
   experiences: Experience[];
   setExperiences: (experiences: Experience[]) => void;
 }
+
+const achievements = `* Delivered order microservice with **99.99% uptime SLA**.
+* Implemented a CI/CD pipeline for a mobile app, **reducing release time by 50%**.
+* Engineered a scalable data processing system for a financial institution, handling **100M+ transactions per day**.`;
 
 export const useEditorStore = create<EditorState>((set) => ({
   personName: "John M. Doe",
@@ -31,12 +35,13 @@ export const useEditorStore = create<EditorState>((set) => ({
   setSubTitleText: (text) => set({ subTitleText: text }),
 
   enableSummary: true,
-  summary: "Engineering Leader with 15 years of experience in software development.",
+  summary:
+    "Engineering Leader with 15 years of experience in software development and scaling large-scale production infrastructure. Drove reliability efforts including monitoring, alerting, automated deployment pipelines, failure resiliency and capacity management.",
   setSummary: (summary) => set({ summary }),
   setEnableSummary: (enableSummary) => set({ enableSummary }),
 
   enableAchievements: true,
-  achievements: ["Achievement 1", "Achievement 2", "Achievement 3"],
+  achievements,
   setAchievements: (achievements) => set({ achievements }),
   setEnableAchievements: (enableAchievements) => set({ enableAchievements }),
 

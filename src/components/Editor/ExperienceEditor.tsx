@@ -1,23 +1,13 @@
 import React from "react";
 import { useEditorStore } from "@/store/editor.store";
 import { Experience } from "@/components/ExperienceSection";
-import BulletListEditor from "./BulletListEditor";
-import FormInput from "../common/FormInput";
+import FormField from "../common/FormField";
 
 const ExperienceEditor: React.FC = () => {
   const { experiences, setExperiences } = useEditorStore();
 
   const handleChange = (idx: number, key: keyof Experience, value: any) => {
-    const updated = experiences.map((exp, i) =>
-      i === idx ? { ...exp, [key]: value } : exp
-    );
-    setExperiences(updated);
-  };
-
-  const setBulletList = (expIdx: number, bullets: string[]) => {
-    const updated = experiences.map((exp, i) =>
-      i === expIdx ? { ...exp, bullets } : exp
-    );
+    const updated = experiences.map((exp, i) => (i === idx ? { ...exp, [key]: value } : exp));
     setExperiences(updated);
   };
 
@@ -29,7 +19,7 @@ const ExperienceEditor: React.FC = () => {
       from: "",
       to: "",
       summary: "",
-      bullets: [""]
+      bullets: [""],
     };
     setExperiences([...experiences, blank]);
   };
@@ -43,55 +33,55 @@ const ExperienceEditor: React.FC = () => {
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">Experience</h2>
-        <button
-          type="button"
-          onClick={addExperience}
-          className="px-3 py-1 text-sm text-white bg-blue-500 rounded"
-        >
+        <button type="button" onClick={addExperience} className="px-3 py-1 text-sm text-white bg-blue-500 rounded">
           + Add Experience
         </button>
       </div>
       {experiences.map((exp, idx) => (
         <div key={idx} className="mb-6 p-4 border rounded-lg relative">
-          <FormInput
+          <FormField
+            fieldTitle="Company"
             placeholder="Company"
             value={exp.company}
-            onChange={value => handleChange(idx, "company", value)}
+            onChange={(value) => handleChange(idx, "company", value)}
           />
-          <FormInput
-            placeholder="Position"
-            value={exp.position}
-            onChange={value => handleChange(idx, "position", value)}
-          />
-          <FormInput
-            placeholder="Location"
-            value={exp.location}
-            onChange={value => handleChange(idx, "location", value)}
-          />
-          <FormInput
-            placeholder="From (e.g. Jan 2020)"
-            value={exp.from}
-            onChange={value => handleChange(idx, "from", value)}
-          />
-          <FormInput
-            placeholder="To (e.g. Dec 2022 or leave blank for Current)"
-            value={exp.to ?? ""}
-            onChange={value => handleChange(idx, "to", value)}
-          />
-          <FormInput
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              fieldTitle="Position"
+              placeholder="Position"
+              value={exp.position}
+              onChange={(value) => handleChange(idx, "position", value)}
+            />
+            <FormField
+              fieldTitle="Location"
+              placeholder="Location"
+              value={exp.location}
+              onChange={(value) => handleChange(idx, "location", value)}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              fieldTitle="From"
+              placeholder="From (e.g. Jan 2020)"
+              value={exp.from}
+              onChange={(value) => handleChange(idx, "from", value)}
+            />
+            <FormField
+              fieldTitle="To"
+              placeholder="To (e.g. Dec 2022 or leave blank for Current)"
+              value={exp.to ?? ""}
+              onChange={(value) => handleChange(idx, "to", value)}
+            />
+          </div>
+          <FormField
+            fieldTitle="Experience Summary"
             type="textarea"
             placeholder="Summary paragraph"
             value={exp.summary}
-            onChange={value => handleChange(idx, "summary", value)}
+            onChange={(value) => handleChange(idx, "summary", value)}
+            showWordCount={true}
           />
-          <div className="mb-2">
-            <label className="block text-xs mb-1 font-medium text-gray-700">Bullets</label>
-            <BulletListEditor
-              items={exp.bullets}
-              setItems={(bullets) => setBulletList(idx, bullets)}
-              placeholderPrefix="Bullet"
-            />
-          </div>
+
           {experiences.length > 1 && (
             <button
               type="button"
