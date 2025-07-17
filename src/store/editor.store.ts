@@ -3,6 +3,13 @@ import { create } from "zustand";
 import { Experience } from "@/components/ExperienceSection";
 import { experiences as initialExperiences } from "@/components/ExperienceSection/sampleData";
 
+export interface CustomBlock {
+  id: string;
+  enabled: boolean;
+  title: string;
+  content: string;
+}
+
 interface EditorState {
   personName: string;
   setPersonName: (name: string) => void;
@@ -22,6 +29,11 @@ interface EditorState {
 
   experiences: Experience[];
   setExperiences: (experiences: Experience[]) => void;
+  
+  customBlocks: CustomBlock[];
+  addCustomBlock: () => void;
+  updateCustomBlock: (id: string, updates: Partial<Omit<CustomBlock, 'id'>>) => void;
+  removeCustomBlock: (id: string) => void;
 }
 
 const achievements = `* Delivered order microservice with **99.99% uptime SLA**.
@@ -47,4 +59,25 @@ export const useEditorStore = create<EditorState>((set) => ({
 
   experiences: initialExperiences,
   setExperiences: (experiences) => set({ experiences }),
+  
+  customBlocks: [],
+  addCustomBlock: () => set((state) => ({
+    customBlocks: [
+      ...state.customBlocks,
+      {
+        id: `block-${Date.now()}`,
+        enabled: true,
+        title: 'Custom Block',
+        content: 'Add your content here'
+      }
+    ]
+  })),
+  updateCustomBlock: (id, updates) => set((state) => ({
+    customBlocks: state.customBlocks.map(block => 
+      block.id === id ? { ...block, ...updates } : block
+    )
+  })),
+  removeCustomBlock: (id) => set((state) => ({
+    customBlocks: state.customBlocks.filter(block => block.id !== id)
+  }))
 }));

@@ -3,6 +3,7 @@ import React from "react";
 import { useEditorStore } from "@/store/editor.store";
 import ExperienceEditor from "./ExperienceEditor";
 import FormField from "../common/FormField";
+import CustomBlockEditor from "./CustomBlockEditor";
 
 const Editor = () => {
   const {
@@ -53,6 +54,8 @@ const Editor = () => {
       />
 
       <ExperienceEditor />
+      
+      <CustomBlockEditor />
     </div>
   );
 };
