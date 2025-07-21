@@ -70,3 +70,22 @@ pnpm dev
 
 > [!WARNING]
 > You will need to update the `docs/config.json` file (in the project's repo) if you add a new doc page!
+
+
+## LinkedIn Launch Post
+
+They say “If you’re not embarrassed by your first version, you’ve launched too late.”
+
+Initially started as a project to solve to personal problems (updating CV faster than what Google Docs & learning TypeScript) 😬 But the philosophy quickly shifted. I'm going "vibe coding" over "better engineering" to get to a v1 before my Windsurf plan expires and I have to go shopping for a new IDE that won't burn a hole in my pocket. 😬
+
+So, I'm thrilled to share Trajectory.Help! 🚀
+
+It's a CV builder that doesn't just give you a template; it gives you guardrails to actively help you write a more effective CV.
+
+It's raw. It's early. But it's live.
+
+Roadmap is stacked around career tools. Building in public. Real-time chaos. Follow along for updates!
+
+Please check it out and share your thoughts!
+
+#BuildInPublic #CVBuilder #CareerGrowth #Tech

@@ -1,13 +1,22 @@
 import { create } from "zustand";
 
-import { Experience } from "@/components/ExperienceSection";
-import { experiences as initialExperiences } from "@/components/ExperienceSection/sampleData";
+import { Experience } from "~/components/MarkdownRenderer/ExperienceSection";
+import { experiences as initialExperiences } from "~/components/MarkdownRenderer/ExperienceSection/sampleData";
 
 export interface CustomBlock {
   id: string;
   enabled: boolean;
   title: string;
   content: string;
+}
+
+export type SectionType = "achievements" | "experiences" | "customBlock";
+
+export interface SectionOrder {
+  id: string;
+  type: SectionType;
+  enabled: boolean;
+  customBlockId?: string; // For custom block sections
 }
 
 interface EditorState {
@@ -29,20 +38,23 @@ interface EditorState {
 
   experiences: Experience[];
   setExperiences: (experiences: Experience[]) => void;
-  
+
   customBlocks: CustomBlock[];
   addCustomBlock: () => void;
-  updateCustomBlock: (id: string, updates: Partial<Omit<CustomBlock, 'id'>>) => void;
+  updateCustomBlock: (id: string, updates: Partial<Omit<CustomBlock, "id">>) => void;
   removeCustomBlock: (id: string) => void;
+
+  sectionOrder: SectionOrder[];
+  setSectionOrder: (order: SectionOrder[]) => void;
 }
 
-const achievements = `* Delivered order microservice with **99.99% uptime SLA**.
-* Implemented a CI/CD pipeline for a mobile app, **reducing release time by 50%**.
-* Engineered a scalable data processing system for a financial institution, handling **100M+ transactions per day**.`;
+const achievements = `* Delivered order microservice with **99.99% uptime SLA**
+* Implemented a CI/CD pipeline for a mobile app, **reducing release time by 50%**
+* Engineered a scalable data processing system for a financial institution, handling **100M+ transactions per day**`;
 
 export const useEditorStore = create<EditorState>((set) => ({
   personName: "John M. Doe",
-  subTitleText: "Engineering Leader | +1 (512) 555-5555",
+  subTitleText: "Engineering Leader • Austin, TX • +1 (512) 555-5555 • john.doe@example.com",
   setPersonName: (name) => set({ personName: name }),
   setSubTitleText: (text) => set({ subTitleText: text }),
 
@@ -55,29 +67,91 @@ export const useEditorStore = create<EditorState>((set) => ({
   enableAchievements: true,
   achievements,
   setAchievements: (achievements) => set({ achievements }),
-  setEnableAchievements: (enableAchievements) => set({ enableAchievements }),
+  setEnableAchievements: (enableAchievements) =>
+    set((state) => ({
+      enableAchievements,
+      sectionOrder: state.sectionOrder.map((section) =>
+        section.type === "achievements" ? { ...section, enabled: enableAchievements } : section
+      ),
+    })),
 
   experiences: initialExperiences,
   setExperiences: (experiences) => set({ experiences }),
-  
-  customBlocks: [],
-  addCustomBlock: () => set((state) => ({
-    customBlocks: [
-      ...state.customBlocks,
-      {
-        id: `block-${Date.now()}`,
+
+  customBlocks: [
+    {
+      id: "block-1",
+      enabled: true,
+      title: "Skills",
+      content:
+        "* **Programming Languages**: TypeScript, JavaScript, Python, Java, C#\n* **Tools**: Git, Docker, Kubernetes, Jira, Confluence",
+    },
+  ],
+
+  sectionOrder: [
+    { id: "achievements", type: "achievements", enabled: true },
+    { id: "experiences", type: "experiences", enabled: true },
+    { id: "customBlock-1", type: "customBlock", enabled: true, customBlockId: "block-1" },
+  ],
+
+  addCustomBlock: () =>
+    set((state) => {
+      const newBlockId = `block-${Date.now()}`;
+      const newBlock = {
+        id: newBlockId,
         enabled: true,
-        title: 'Custom Block',
-        content: 'Add your content here'
+        title: "Section Title",
+        content: "Add your section content here",
+      };
+
+      return {
+        customBlocks: [...state.customBlocks, newBlock],
+        sectionOrder: [
+          ...state.sectionOrder,
+          {
+            id: `section-${newBlockId}`,
+            type: "customBlock" as SectionType,
+            enabled: true,
+            customBlockId: newBlockId,
+          },
+        ],
+      };
+    }),
+  updateCustomBlock: (id, updates) =>
+    set((state) => {
+      const updatedCustomBlocks = state.customBlocks.map((block) =>
+        block.id === id ? { ...block, ...updates } : block
+      );
+
+      // If enabled state changed, update section order too
+      let updatedSectionOrder = state.sectionOrder;
+      if ("enabled" in updates) {
+        updatedSectionOrder = state.sectionOrder.map((section) =>
+          section.customBlockId === id ? { ...section, enabled: updates.enabled! } : section
+        );
       }
-    ]
-  })),
-  updateCustomBlock: (id, updates) => set((state) => ({
-    customBlocks: state.customBlocks.map(block => 
-      block.id === id ? { ...block, ...updates } : block
-    )
-  })),
-  removeCustomBlock: (id) => set((state) => ({
-    customBlocks: state.customBlocks.filter(block => block.id !== id)
-  }))
+
+      return {
+        customBlocks: updatedCustomBlocks,
+        sectionOrder: updatedSectionOrder,
+      };
+    }),
+  removeCustomBlock: (id) =>
+    set((state) => ({
+      customBlocks: state.customBlocks.filter((block) => block.id !== id),
+      sectionOrder: state.sectionOrder.filter((section) => section.customBlockId !== id),
+    })),
+
+  setSectionOrder: (order) =>
+    set((state) => {
+      // Update individual enable states based on section order
+      const achievementsSection = order.find((s) => s.type === "achievements");
+      const updatedState: any = { sectionOrder: order };
+
+      if (achievementsSection && achievementsSection.enabled !== state.enableAchievements) {
+        updatedState.enableAchievements = achievementsSection.enabled;
+      }
+
+      return updatedState;
+    }),
 }));

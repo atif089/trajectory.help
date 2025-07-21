@@ -1,10 +1,42 @@
 import React from "react";
 import { marked } from "marked";
 import { useEditorStore } from "@/store/editor.store";
+
+import AchievementsSectionWrapper from "./AchievementsSectionWrapper";
 import ExperienceSectionWrapper from "./ExperienceSectionWrapper";
+import SummarySectionWrapper from "./SummarySectionWrapper";
 
 function MarkdownRenderer() {
-  const { personName, subTitleText, enableSummary, summary, enableAchievements, achievements, customBlocks } = useEditorStore();
+  const { personName, subTitleText, enableSummary, summary, enableAchievements, achievements, customBlocks, sectionOrder } =
+    useEditorStore();
+
+  const renderSection = (section: any) => {
+    if (!section.enabled) return null;
+
+    switch (section.type) {
+      case "achievements":
+        return (
+          <AchievementsSectionWrapper 
+            key={section.id}
+            achievements={achievements} 
+            enableAchievements={enableAchievements} 
+          />
+        );
+      case "experiences":
+        return <ExperienceSectionWrapper key={section.id} />;
+      case "customBlock":
+        const customBlock = customBlocks.find(block => block.id === section.customBlockId);
+        if (!customBlock || !customBlock.enabled) return null;
+        return (
+          <section key={section.id} className="mb-4">
+            <h2 className="text-[14pt] font-bold">{customBlock.title}</h2>
+            <div className="mt-2" dangerouslySetInnerHTML={{ __html: marked.parse(customBlock.content) }}></div>
+          </section>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="cv-preview w-full flex items-center justify-center my-4 ">
@@ -14,32 +46,11 @@ function MarkdownRenderer() {
           <p className="text-[14pt]">{subTitleText}</p>
         </section>
 
-        {enableSummary && (
-          <section className="mb-4">
-            <h2 className="text-[14pt] font-bold">Summary</h2>
-            <p>{summary}</p>
-          </section>
-        )}
+        <hr className="my-4 border-black" />
 
-        {enableAchievements && (
-          <section className="mb-4">
-            <h2 className="text-[14pt] font-bold">Achievements</h2>
-
-            {achievements && (
-              <div className="mt-2" dangerouslySetInnerHTML={{ __html: marked.parse(achievements) }}></div>
-            )}
-          </section>
-        )}
-        <ExperienceSectionWrapper />
+        <SummarySectionWrapper enableSummary={enableSummary} summary={summary} />
         
-        {customBlocks.map(block => (
-          block.enabled && (
-            <section key={block.id} className="mb-4">
-              <h2 className="text-[14pt] font-bold">{block.title}</h2>
-              <div className="mt-2" dangerouslySetInnerHTML={{ __html: marked.parse(block.content) }}></div>
-            </section>
-          )
-        ))}
+        {sectionOrder.map(renderSection)}
       </div>
     </div>
   );

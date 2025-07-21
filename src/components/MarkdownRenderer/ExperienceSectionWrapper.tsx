@@ -1,5 +1,5 @@
 import React from "react";
-import ExperienceSection from "../ExperienceSection";
+import ExperienceSection from "./ExperienceSection";
 import { useEditorStore } from "@/store/editor.store";
 
 const ExperienceSectionWrapper: React.FC = () => {

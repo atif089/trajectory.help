@@ -7,6 +7,8 @@
 @layer base {
   :root {
     --font-main: "Mona Sans Variable", serif, sans-serif;
+    --btn-bg-color: #0d0c22;
+    --btn-bg-color-hover: #0d0c22aa;
   }
 
   html {

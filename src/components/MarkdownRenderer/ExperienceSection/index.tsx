@@ -1,4 +1,5 @@
 import React from "react";
+import { marked } from "marked";
 
 export interface Experience {
   company: string;
@@ -6,8 +7,7 @@ export interface Experience {
   location: string;
   from: string;
   to?: string;
-  summary: string;
-  bullets: string[];
+  experienceSummary: string;
 }
 
 interface ExperienceSectionProps {
@@ -26,7 +26,7 @@ const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experiences }) =>
           <div className="text-gray-600">
             {exp.location} | {exp.from} - {exp.to ? exp.to : "Current"}
           </div>
-          <p className="mt-1">{exp.summary}</p>
+          <div className="mt-1" dangerouslySetInnerHTML={{ __html: marked.parse(exp.experienceSummary) }}></div>
         </div>
       ))}
     </section>

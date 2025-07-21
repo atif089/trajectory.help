@@ -26,7 +26,7 @@ const FormField: React.FC<FormFieldProps> = ({
   const inputElement =
     type === "textarea" ? (
       <textarea
-        className={`resize-y ${className}`}
+        className={`resize-y block ${className}`}
         placeholder={placeholder}
         value={value}
         disabled={disabled}
@@ -49,12 +49,12 @@ const FormField: React.FC<FormFieldProps> = ({
 
   const indicator_rule_engine = {
     green: {
-      words: 40,
-      chars: 300,
+      words: 30,
+      chars: 200,
     },
     yellow: {
-      words: 70,
-      chars: 650,
+      words: 60,
+      chars: 600,
     },
   };
 
@@ -66,7 +66,7 @@ const FormField: React.FC<FormFieldProps> = ({
         : "bg-red-200";
 
   return (
-    <div className="editor_field__wrapper mb-4 bg-violet-50 border border-gray-200 p-4 rounded relative">
+    <div className="editor_field__wrapper my-4 border-gray-200 rounded relative">
       {children}
       <label className="block text-xs font-medium text-gray-700 absolute top-[-12px] left-2 bg-white px-2">
         {fieldTitle}
@@ -75,7 +75,10 @@ const FormField: React.FC<FormFieldProps> = ({
 
       {showWordCount && (
         <div className="flex justify-between bottom-2 right-2 absolute">
-          <span title="words (chars)" className={indicatorBgClass + " p-[3px] text-xs font-bold chars"}>
+          <span
+            title={`${words} words (${chars} chars)`}
+            className={indicatorBgClass + " p-[3px] text-xs font-bold chars"}
+          >
             {words}w ({chars}c)
           </span>
         </div>
