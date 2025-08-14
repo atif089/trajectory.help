@@ -4,7 +4,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { useEditorStore } from "@/store/editor.store";
 import FormField from "../common/FormField";
 import ReorderableSection from "./ReorderableSection";
-import AchievementsSection from "./AchievementsSection";
+
 import CustomBlockItem from "./CustomBlockItem";
 import ClientOnlyDndContext from "./ClientOnlyDndContext";
 import { Button } from "@/components/common/Button";
@@ -16,12 +16,10 @@ const Editor = () => {
     subTitleText,
     enableSummary,
     summary,
-    enableAchievements,
     setPersonName,
     setSubTitleText,
     setEnableSummary,
     setSummary,
-    setEnableAchievements,
     sectionOrder,
     setSectionOrder,
     customBlocks,
@@ -47,17 +45,13 @@ const Editor = () => {
     setSectionOrder(updatedOrder);
 
     // Update the specific enable state in the store
-    if (sectionId === "achievements") {
-      setEnableAchievements(enabled);
-    } else if (section?.type === "customBlock" && section.customBlockId) {
+    if (section?.type === "customBlock" && section.customBlockId) {
       updateCustomBlock(section.customBlockId, { enabled });
     }
   };
 
   const getSectionTitle = (section: any): string => {
     switch (section.type) {
-      case "achievements":
-        return "Achievements";
       case "experiences":
         return "Experiences";
       case "customBlock":
@@ -70,8 +64,6 @@ const Editor = () => {
 
   const renderSectionContent = (section: any) => {
     switch (section.type) {
-      case "achievements":
-        return <AchievementsSection />;
       case "experiences":
         return <ExperienceEditor />;
       case "customBlock":

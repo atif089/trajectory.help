@@ -2,7 +2,7 @@ import React from "react";
 import { marked } from "marked";
 import { useEditorStore } from "@/store/editor.store";
 
-import AchievementsSectionWrapper from "./AchievementsSectionWrapper";
+
 import ExperienceSectionWrapper from "./ExperienceSectionWrapper";
 import SummarySectionWrapper from "./SummarySectionWrapper";
 
@@ -12,9 +12,7 @@ function MarkdownRenderer() {
     subTitleText,
     enableSummary,
     summary,
-    enableAchievements,
-    achievements,
-    achievementsSectionTitle,
+
     customBlocks,
     sectionOrder,
   } = useEditorStore();
@@ -23,15 +21,6 @@ function MarkdownRenderer() {
     if (!section.enabled) return null;
 
     switch (section.type) {
-      case "achievements":
-        return (
-          <AchievementsSectionWrapper
-            key={section.id}
-            achievements={achievements}
-            enableAchievements={enableAchievements}
-            achievementsSectionTitle={achievementsSectionTitle}
-          />
-        );
       case "experiences":
         return <ExperienceSectionWrapper key={section.id} />;
       case "customBlock":

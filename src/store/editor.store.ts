@@ -10,7 +10,7 @@ export interface CustomBlock {
   content: string;
 }
 
-export type SectionType = "achievements" | "experiences" | "customBlock";
+export type SectionType = "experiences" | "customBlock";
 
 export interface SectionOrder {
   id: string;
@@ -30,13 +30,6 @@ interface EditorState {
   summary: string;
   setSummary: (summary: string) => void;
   setEnableSummary: (enableSummary: boolean) => void;
-
-  enableAchievements: boolean;
-  achievementsSectionTitle: string;
-  achievements: string;
-  setAchievements: (achievements: string) => void;
-  setEnableAchievements: (enableAchievements: boolean) => void;
-  setAchievementsSectionTitle: (achievementsSectionTitle: string) => void;
 
   experiences: Experience[];
   setExperiences: (experiences: Experience[]) => void;
@@ -66,25 +59,18 @@ export const useEditorStore = create<EditorState>((set) => ({
   setSummary: (summary) => set({ summary }),
   setEnableSummary: (enableSummary) => set({ enableSummary }),
 
-  enableAchievements: true,
-  achievementsSectionTitle: "Key Achievements",
-  achievements,
-  setAchievements: (achievements) => set({ achievements }),
-  setAchievementsSectionTitle: (achievementsSectionTitle) => set({ achievementsSectionTitle }),
-  setEnableAchievements: (enableAchievements) =>
-    set((state) => ({
-      enableAchievements,
-      sectionOrder: state.sectionOrder.map((section) =>
-        section.type === "achievements" ? { ...section, enabled: enableAchievements } : section
-      ),
-    })),
-
   experiences: initialExperiences,
   setExperiences: (experiences) => set({ experiences }),
 
   customBlocks: [
     {
-      id: "block-1",
+      id: "block-achievements-1",
+      enabled: true,
+      title: "Key Achievements",
+      content: achievements,
+    },
+    {
+      id: "block-skills-1",
       enabled: true,
       title: "Skills",
       content:
@@ -93,9 +79,9 @@ export const useEditorStore = create<EditorState>((set) => ({
   ],
 
   sectionOrder: [
-    { id: "achievements", type: "achievements", enabled: true },
+    { id: "section-achievements", type: "customBlock", enabled: true, customBlockId: "block-achievements-1" },
     { id: "experiences", type: "experiences", enabled: true },
-    { id: "customBlock-1", type: "customBlock", enabled: true, customBlockId: "block-1" },
+    { id: "section-skills", type: "customBlock", enabled: true, customBlockId: "block-skills-1" },
   ],
 
   addCustomBlock: () =>
@@ -146,16 +132,5 @@ export const useEditorStore = create<EditorState>((set) => ({
       sectionOrder: state.sectionOrder.filter((section) => section.customBlockId !== id),
     })),
 
-  setSectionOrder: (order) =>
-    set((state) => {
-      // Update individual enable states based on section order
-      const achievementsSection = order.find((s) => s.type === "achievements");
-      const updatedState: any = { sectionOrder: order };
-
-      if (achievementsSection && achievementsSection.enabled !== state.enableAchievements) {
-        updatedState.enableAchievements = achievementsSection.enabled;
-      }
-
-      return updatedState;
-    }),
+  setSectionOrder: (order) => set({ sectionOrder: order }),
 }));
