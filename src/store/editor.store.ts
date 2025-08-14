@@ -32,9 +32,11 @@ interface EditorState {
   setEnableSummary: (enableSummary: boolean) => void;
 
   enableAchievements: boolean;
+  achievementsSectionTitle: string;
   achievements: string;
   setAchievements: (achievements: string) => void;
   setEnableAchievements: (enableAchievements: boolean) => void;
+  setAchievementsSectionTitle: (achievementsSectionTitle: string) => void;
 
   experiences: Experience[];
   setExperiences: (experiences: Experience[]) => void;
@@ -65,8 +67,10 @@ export const useEditorStore = create<EditorState>((set) => ({
   setEnableSummary: (enableSummary) => set({ enableSummary }),
 
   enableAchievements: true,
+  achievementsSectionTitle: "Key Achievements",
   achievements,
   setAchievements: (achievements) => set({ achievements }),
+  setAchievementsSectionTitle: (achievementsSectionTitle) => set({ achievementsSectionTitle }),
   setEnableAchievements: (enableAchievements) =>
     set((state) => ({
       enableAchievements,

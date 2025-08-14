@@ -7,8 +7,17 @@ import ExperienceSectionWrapper from "./ExperienceSectionWrapper";
 import SummarySectionWrapper from "./SummarySectionWrapper";
 
 function MarkdownRenderer() {
-  const { personName, subTitleText, enableSummary, summary, enableAchievements, achievements, customBlocks, sectionOrder } =
-    useEditorStore();
+  const {
+    personName,
+    subTitleText,
+    enableSummary,
+    summary,
+    enableAchievements,
+    achievements,
+    achievementsSectionTitle,
+    customBlocks,
+    sectionOrder,
+  } = useEditorStore();
 
   const renderSection = (section: any) => {
     if (!section.enabled) return null;
@@ -16,16 +25,17 @@ function MarkdownRenderer() {
     switch (section.type) {
       case "achievements":
         return (
-          <AchievementsSectionWrapper 
+          <AchievementsSectionWrapper
             key={section.id}
-            achievements={achievements} 
-            enableAchievements={enableAchievements} 
+            achievements={achievements}
+            enableAchievements={enableAchievements}
+            achievementsSectionTitle={achievementsSectionTitle}
           />
         );
       case "experiences":
         return <ExperienceSectionWrapper key={section.id} />;
       case "customBlock":
-        const customBlock = customBlocks.find(block => block.id === section.customBlockId);
+        const customBlock = customBlocks.find((block) => block.id === section.customBlockId);
         if (!customBlock || !customBlock.enabled) return null;
         return (
           <section key={section.id} className="mb-4">
@@ -49,7 +59,7 @@ function MarkdownRenderer() {
         <hr className="my-4 border-black" />
 
         <SummarySectionWrapper enableSummary={enableSummary} summary={summary} />
-        
+
         {sectionOrder.map(renderSection)}
       </div>
     </div>

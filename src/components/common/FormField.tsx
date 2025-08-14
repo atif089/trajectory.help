@@ -44,8 +44,8 @@ const FormField: React.FC<FormFieldProps> = ({
     );
 
   // TODO: These are not accurate for markdown text
-  const chars = value.length;
-  const words = value.split(" ").length;
+  const chars = typeof value === "string" ? value.length : 0;
+  const words = typeof value === "string" ? value.split(" ").length : 0;
 
   const indicator_rule_engine = {
     green: {
