@@ -18,6 +18,7 @@ import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout'
 import { Route as IndexRouteImport } from './routes/index'
 import { ServerRoute as HealthzServerRouteImport } from './routes/healthz'
 import { ServerRoute as ApiHelloServerRouteImport } from './routes/api.hello'
+import { ServerRoute as ApiCvParseServerRouteImport } from './routes/api.cv.parse'
 
 const rootServerRouteImport = createServerRootRoute()
 
@@ -53,6 +54,11 @@ const HealthzServerRoute = HealthzServerRouteImport.update({
 const ApiHelloServerRoute = ApiHelloServerRouteImport.update({
   id: '/api/hello',
   path: '/api/hello',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiCvParseServerRoute = ApiCvParseServerRouteImport.update({
+  id: '/api/cv/parse',
+  path: '/api/cv/parse',
   getParentRoute: () => rootServerRouteImport,
 } as any)
 
@@ -94,27 +100,31 @@ export interface RootRouteChildren {
 export interface FileServerRoutesByFullPath {
   '/healthz': typeof HealthzServerRoute
   '/api/hello': typeof ApiHelloServerRoute
+  '/api/cv/parse': typeof ApiCvParseServerRoute
 }
 export interface FileServerRoutesByTo {
   '/healthz': typeof HealthzServerRoute
   '/api/hello': typeof ApiHelloServerRoute
+  '/api/cv/parse': typeof ApiCvParseServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/healthz': typeof HealthzServerRoute
   '/api/hello': typeof ApiHelloServerRoute
+  '/api/cv/parse': typeof ApiCvParseServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/healthz' | '/api/hello'
+  fullPaths: '/healthz' | '/api/hello' | '/api/cv/parse'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/healthz' | '/api/hello'
-  id: '__root__' | '/healthz' | '/api/hello'
+  to: '/healthz' | '/api/hello' | '/api/cv/parse'
+  id: '__root__' | '/healthz' | '/api/hello' | '/api/cv/parse'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   HealthzServerRoute: typeof HealthzServerRoute
   ApiHelloServerRoute: typeof ApiHelloServerRoute
+  ApiCvParseServerRoute: typeof ApiCvParseServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +182,13 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiHelloServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
+    '/api/cv/parse': {
+      id: '/api/cv/parse'
+      path: '/api/cv/parse'
+      fullPath: '/api/cv/parse'
+      preLoaderRoute: typeof ApiCvParseServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
   }
 }
 
@@ -188,6 +205,7 @@ export const routeTree = rootRouteImport
 const rootServerRouteChildren: RootServerRouteChildren = {
   HealthzServerRoute: HealthzServerRoute,
   ApiHelloServerRoute: ApiHelloServerRoute,
+  ApiCvParseServerRoute: ApiCvParseServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

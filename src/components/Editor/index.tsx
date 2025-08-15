@@ -9,6 +9,7 @@ import CustomBlockItem from "./CustomBlockItem";
 import ClientOnlyDndContext from "./ClientOnlyDndContext";
 import { Button } from "@/components/common/Button";
 import ExperienceEditor from "@/components/Editor/ExperienceEditor";
+import PDFUploader from "@/components/PDFUploader";
 
 const Editor = () => {
   const {
@@ -83,6 +84,7 @@ const Editor = () => {
 
   return (
     <div>
+      <PDFUploader />
       <FormField fieldTitle="Name" placeholder="Your Name" value={personName} onChange={setPersonName} />
       <FormField fieldTitle="Subtitle" placeholder="Your Subtitle" value={subTitleText} onChange={setSubTitleText} />
       <div className="mb-4">

@@ -16,6 +16,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@google/genai": "^1.14.0",
     "@react-pdf/renderer": "^4.3.0",
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-query-devtools": "^5.66.0",
@@ -26,6 +27,7 @@
     "marked": "^16.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-dropzone": "^14.3.8",
     "redaxios": "^0.5.1",
     "tailwind-merge": "^2.6.0",
     "zustand": "^5.0.6"
