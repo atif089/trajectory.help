@@ -11,7 +11,7 @@ const PDFUploader: React.FC = () => {
       setIsParsing(true);
 
       try {
-        const response = await fetch('/api/cv/parse', {
+        const response = await fetch('/api/resume/parse', {
           method: 'POST',
           headers: {
             'Content-Type': file.type,

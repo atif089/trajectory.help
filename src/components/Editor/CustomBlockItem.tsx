@@ -13,7 +13,7 @@ interface CustomBlockItemProps {
 const CustomBlockItem: React.FC<CustomBlockItemProps> = ({ block, onUpdate, onRemove, hideToggle = false }) => {
   return (
     <div className={hideToggle ? "" : "mb-6 p-4 border border-gray-200 rounded-md"}>
-      <div className="flex justify-between items-center mb-2">
+      <div className="flex justify-end mb-2">
         <Button onClick={() => onRemove(block.id)} size="sm" variant="delete">
           Remove Section
         </Button>
