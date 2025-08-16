@@ -110,7 +110,7 @@ Any standout education, certifications, or awards (if applicable).
 Use Markdown formatting:
 Bold key metrics, goals, or business impact using ** (e.g., 25% increase, $10M ARR, launched in 12 countries).
 Avoid unnecessary verbosity.
-Focus especially on content in the Profile Summary, Professional Experience, Key Achievements, or Highlights sections of the CV.
+Focus especially on content in the Profile Summary, Professional Experience, Achievements, or Highlights sections of the CV.
 If the CV is fragmented or visually structured (e.g. in columns), do your best to interpret and unify the information logically.
 
 Output format example:

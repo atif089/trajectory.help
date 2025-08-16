@@ -66,7 +66,7 @@ export const useEditorStore = create<EditorState>((set) => ({
     {
       id: "block-achievements-1",
       enabled: true,
-      title: "Key Achievements",
+      title: "Achievements",
       content: achievements,
     },
     {
