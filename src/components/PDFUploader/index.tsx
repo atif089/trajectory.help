@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { mapResumeDtoToEditorState } from "@/services/resume-parser/mapper";
 
 const PDFUploader: React.FC = () => {
   const [isParsing, setIsParsing] = useState(false);
 
-      const onDrop = useCallback(async (acceptedFiles: File[]) => {
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
       console.log('File uploaded:', file.name);
@@ -24,7 +25,7 @@ const PDFUploader: React.FC = () => {
         }
 
         const result = await response.json();
-        console.log('Parsed CV:', result);
+        mapResumeDtoToEditorState(result);
         alert('CV parsed successfully!');
       } catch (error) {
         console.error('Error parsing CV:', error);
