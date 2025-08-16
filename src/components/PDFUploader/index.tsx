@@ -1,10 +1,19 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { mapResumeDtoToEditorState } from "@/services/resume-parser/mapper";
+
+const BouncingDotsLoader = () => (
+    <div className="flex justify-center items-center space-x-2">
+      <div className="w-4 h-4 bg-violet-700 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+      <div className="w-4 h-4 bg-violet-700 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+      <div className="w-4 h-4 bg-violet-700 rounded-full animate-bounce"></div>
+    </div>
+  );
 
 const PDFUploader: React.FC = () => {
   const [isParsing, setIsParsing] = useState(false);
 
-      const onDrop = useCallback(async (acceptedFiles: File[]) => {
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
       console.log('File uploaded:', file.name);
@@ -24,7 +33,7 @@ const PDFUploader: React.FC = () => {
         }
 
         const result = await response.json();
-        console.log('Parsed CV:', result);
+        mapResumeDtoToEditorState(result);
         alert('CV parsed successfully!');
       } catch (error) {
         console.error('Error parsing CV:', error);
@@ -51,8 +60,9 @@ const PDFUploader: React.FC = () => {
       <input {...getInputProps()} />
       {
         isParsing ? (
-          <div>
-            <p className="text-lg font-semibold">Parsing your resume...</p>
+          <div className="flex flex-col items-center justify-center">
+            <BouncingDotsLoader />
+            <p className="text-lg font-semibold mt-4">Parsing your resume...</p>
             <p className="text-sm text-gray-500">This might take a moment.</p>
           </div>
         ) : isDragActive ? (
